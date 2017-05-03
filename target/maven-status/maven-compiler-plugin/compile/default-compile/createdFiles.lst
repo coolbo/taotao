@@ -1,0 +1,6 @@
+cn\taotao\usermanage\pojo\User.class
+cn\taotao\usermanage\service\UserService.class
+cn\taotao\usermanage\bean\EasyUIResult.class
+cn\taotao\usermanage\controller\UserController.class
+cn\taotao\usermanage\controller\PageController.class
+cn\taotao\usermanage\mapper\UserMapper.class

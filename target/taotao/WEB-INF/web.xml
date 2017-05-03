@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+	<display-name>taotao</display-name>
+	
+	<!-- spring 的配置文件 springm目录下applicationContext开头的配置文件 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring/applicationContext*.xml</param-value>
+	</context-param>               
+	
+	<!--Spring的ApplicationContext  spring容器的监听器载入 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- 编码过滤器，以UTF8编码 只能解决post 请求乱码问题 get不能 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 配置SpringMVC框架入口 -->
+	<servlet>
+        <servlet-name>taotao-usermanage</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+        	<param-name>contextConfigLocation</param-name>
+        	<!-- spring MVC配置文件 -->
+        	<param-value>classpath:spring/taotao-usermanage-servlet.xml</param-value>        	
+        </init-param>
+        <!-- 0/1 开关 1开启 1 spring容器初始化的时候启动servlet ，0 为第一次访问的时候初始化-->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>taotao-usermanage</servlet-name>
+        <!-- 请求规则 什么样的请求规则进入spring mvc  
+        配置规则：
+        	1，/
+        	2,/*  不能这么配置，Struts 可以 springMVC 不可以
+        		本质区别 ：入口不同
+        			Struts 入口点filter （过滤器）
+        			springMVC 是servlet 
+        	3,*.xxxx
+        	4,/xxx/*
+        	-->
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+    
+    <welcome-file-list>
+    	<welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>
